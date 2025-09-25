@@ -1,0 +1,55 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
+namespace App\Model;
+
+
+class ChannelSendModel extends HomeModel
+{
+    protected ?string $table = 'channel_send';
+    /**
+     * @var string 主键
+     */
+    protected string $primaryKey = 'item_id';
+
+    const UPDATED_AT = null;
+
+    /**
+     * @DOC   :
+     * @Name  : channelSev
+     * @Author: wangfei
+     * @date  : 2023-06-13 2023
+     * @return \Hyperf\Database\Model\Relations\HasOne
+     */
+    public function channelSev()
+    {
+        return $this->hasOne(SevModel::class, 'sev_id', 'sev_id');
+    }
+
+    public function channelWare()
+    {
+        return $this->hasOne(WarehouseModel::class, 'ware_id', 'ware_id')->select(['ware_id', 'area', 'confine', 'ware_name']);
+    }
+
+    /**
+     * @DOC   : 成本模板
+     * @Name  : template
+     * @Author: wangfei
+     * @date  : 2025-04 11:00
+     * @return \Hyperf\Database\Model\Relations\HasOne
+     *
+     */
+    public function template()
+    {
+        return $this->hasOne(PriceTemplateModel::class, 'template_id', 'price_template_id');
+    }
+}
